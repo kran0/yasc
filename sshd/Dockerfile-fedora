@@ -1,0 +1,18 @@
+ARG FEDORA_VERSION=32
+
+FROM fedora:${FEDORA_VERSION}
+
+ADD rootfs /
+
+# Set local mirror repo
+#RUN rm -vf /etc/yum.repos.d/*.repo\
+# && curl http://mirror-loc.cloud69.cbr.ru/fedora/fedora-rcrmirror.repo > /etc/yum.repos.d/fedora-rcrmirror.repo\
+# && curl http://mirror-loc.cloud69.cbr.ru/fedora/rpm-gpg.tar.gz | tar zxC /etc/pki
+
+ARG DNF_INSTALL_PACKAGES
+
+RUN dnf -y install openssh-server ${DNF_INSTALL_PACKAGES}\
+ && dnf clean all
+
+EXPOSE 64022
+ENTRYPOINT ["/entrypoint.sh"]
