@@ -6,16 +6,20 @@
 version: '2'
 services:
   sshd:
+    image: kran0/yasc:latest-${DISTRIB}
     build:
       context: ./sshd
-      dockerfile: Dockerfile-fedora
+      dockerfile: Dockerfile-${DISTRIB}
       args:
-        FEDORA_VERSION: ${FEDORA_VERSION}
+        FEDORA_VERSION:       ${FEDORA_VERSION}
         DNF_INSTALL_PACKAGES: ${DNF_INSTALL_PACKAGES}
+        ALPINE_VERSION:       ${ALPINE_VERSION}
+        APK_INSTALL_PACKAGES: ${APK_INSTALL_PACKAGES}
+        SSHD_PORT:            ${SSHD_PORT}
 
     restart: always
     ports:
-      - "${SSHD_PORT}:${SSHD_PORT}"
+      - "${SSHD_EXTERNAL_PORT}:${SSHD_PORT}"
     env_file: .env
     environment:
       AUTHORIZED_KEYS: >
@@ -28,6 +32,4 @@ services:
         
         ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC33lZtGxrGT+k8Ngke85ei41imIFlmFiGTrlNoBvr3Nl15FspnkAGtGCQGA3cQ1rkuihUBXBheNST6DkPPmEt1oLicg1eL99ShXB0tVUm4RsGAdlQ6xDWoI9LdSjpj3RRnrGYx0zNCvTIzgbuzgg7DcA+wsObrziRkt2AJ9OrfSd7iIKxz+N0Ptt5/F9Iq0zdkiYLjA3q6RSa8RMEen9DRQ9bPy8+jJ9Hyyn7Zex/v6ol39VJZ7ZcKHsoI0qMrbTUtodgussswmNtnO8GHlBiYxi+saN93LeDE4kY9mWbyKRpag6QUjZzUMQwzSb1gq4hOa2g2EFMAXqka8wTggGT5/JWJHaf9x/gRhqBMpms+3vicCnHLwcmbYaMIvwqVKLd4OnH030GNf27Xf7mzkKdgnotpzty0J7BfXsqXTaqEI8uBCte3zBNlrFyyaSCp04sYXgglaLQyOpTrGmd88/Lfcqo663vuL6R0dxKimHeiesXtPJBrTwfkMIIrc4slqjXo+9UbKC13WUJ4ZE6LGLDy2T4ZykOSJ537CSf1z65rC3X6NB8zjBz812lfMGqB5qj6/mGgc/Xy0ncbbIEEPdcTUtPO9MDv4qsQUFl0gfIYU1NobxfJ3dZ8lN/CmFv+QLXVlYhvyCbO9ZwhS/Nj6FRtT3kCtKi+RvEdWbPdC2oLxQ== spo@server13.localdomain
         
-    volumes:
-      - .:/container-source
     network_mode: "host"
