@@ -25,12 +25,11 @@ or
 | Repository:Tag | Description |
 |:--|---|
 | kran0/sshd:latest     | latest sshd + alpine |
-| kran0/sshd:{sourceref}-alpine      | tagged sshd [![Semver][badge_docker_semver]][link_docker_tags] + alpine |
-| kran0/sshd:{sourceref}-fedora      | tagged sshd [![Semver][badge_docker_semver]][link_docker_tags] + fedora |
+| kran0/sshd:{sourceref}-alpine      | tagged sshd + alpine |
+| kran0/sshd:{sourceref}-fedora      | tagged sshd + fedora |
 
 ---
 [badge_docker_automated]:https://img.shields.io/docker/automated/kran0/sshd?style=for-the-badge&cacheSeconds=3600
 [badge_docker_build]:https://img.shields.io/docker/build/kran0/sshd?style=for-the-badge&cacheSeconds=3600
-[badge_docker_semver]:https://img.shields.io/docker/v/kran0/sshd?sort=semver&style=social&cacheSeconds=3600
 [link_docker_tags]:https://hub.docker.com/r/kran0/sshd/tags?page=1&ordering=last_updated
 [link_docker_builds]:https://hub.docker.com/r/kran0/sshd/builds
