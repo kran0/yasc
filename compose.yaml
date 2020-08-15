@@ -6,7 +6,7 @@
 version: '2'
 services:
   sshd:
-    image: kran0/yasc:latest-${DISTRIB}
+    image: kran0/sshd:8.3p1-alpine
     restart: always
     ports:
       - "${SSHD_EXTERNAL_PORT}:${SSHD_PORT}"
