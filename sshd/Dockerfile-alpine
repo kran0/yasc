@@ -4,7 +4,7 @@ FROM alpine:${ALPINE_VERSION}
 ADD rootfs /
 
 ARG SSHD_PACKAGE=openssh-server
-ARG SSHD_PORT
+ARG SSHD_PORT=64022
 
 RUN apk add --update --no-cache ${SSHD_PACKAGE}\
  && rm  -vrf /var/cache/apk/*\
@@ -13,5 +13,5 @@ RUN apk add --update --no-cache ${SSHD_PACKAGE}\
  && echo 'Include /etc/ssh/sshd_config.d/*.conf' >> /etc/ssh/sshd_config\
  && echo root:root | chpasswd
 
-EXPOSE 64022
+EXPOSE ${SSHD_PORT}
 ENTRYPOINT ["/entrypoint.sh"]
