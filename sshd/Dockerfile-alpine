@@ -1,12 +1,12 @@
-ARG ALPINE_VERSION=latest
+ARG ALPINE_VERSION=3.12.0
 FROM alpine:${ALPINE_VERSION}
 
 ADD rootfs /
 
-ARG APK_INSTALL_PACKAGES
+ARG SSHD_PACKAGE=openssh-server
 ARG SSHD_PORT
 
-RUN apk add --update --no-cache openssh-server ${APK_INSTALL_PACKAGES}\
+RUN apk add --update --no-cache ${SSHD_PACKAGE}\
  && rm  -vrf /var/cache/apk/*\
 \
  && echo "Port ${SSHD_PORT}" > /etc/ssh/sshd_config.d/port.conf\

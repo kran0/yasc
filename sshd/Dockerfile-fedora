@@ -1,12 +1,12 @@
-ARG FEDORA_VERSION=latest
+ARG FEDORA_VERSION=33
 FROM fedora:${FEDORA_VERSION}
 
 ADD rootfs /
 
-ARG DNF_INSTALL_PACKAGES
+ARG SSHD_PACKAGE=openssh-server
 ARG SSHD_PORT
 
-RUN dnf -y install openssh-server ${DNF_INSTALL_PACKAGES}\
+RUN dnf -y install ${SSHD_PACKAGE}\
  && dnf clean all\
 \
  && echo "Port ${SSHD_PORT}" > /etc/ssh/sshd_config.d/port.conf
