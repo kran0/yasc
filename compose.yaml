@@ -7,16 +7,6 @@ version: '2'
 services:
   sshd:
     image: kran0/yasc:latest-${DISTRIB}
-    build:
-      context: ./sshd
-      dockerfile: Dockerfile-${DISTRIB}
-      args:
-        FEDORA_VERSION:       ${FEDORA_VERSION}
-        DNF_INSTALL_PACKAGES: ${DNF_INSTALL_PACKAGES}
-        ALPINE_VERSION:       ${ALPINE_VERSION}
-        APK_INSTALL_PACKAGES: ${APK_INSTALL_PACKAGES}
-        SSHD_PORT:            ${SSHD_PORT}
-
     restart: always
     ports:
       - "${SSHD_EXTERNAL_PORT}:${SSHD_PORT}"
