@@ -4,12 +4,12 @@ FROM fedora:${FEDORA_VERSION}
 ADD rootfs /
 
 ARG SSHD_PACKAGE=openssh-server
-ARG SSHD_PORT
+ARG SSHD_PORT=64022
 
 RUN dnf -y install ${SSHD_PACKAGE}\
  && dnf clean all\
 \
  && echo "Port ${SSHD_PORT}" > /etc/ssh/sshd_config.d/port.conf
 
-EXPOSE 64022
+EXPOSE ${SSHD_PORT}
 ENTRYPOINT ["/entrypoint.sh"]
