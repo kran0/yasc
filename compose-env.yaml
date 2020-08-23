@@ -3,7 +3,7 @@ services:
   sshd:
     environment:
       AUTHORIZED_KEYS: |
-        #Pavel Shumskii main key
-        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCgZqU9zgFU+BVdKD4kzktT/BXksygZArCPdGXBr3EMBKNVTlMbUwBIuzWYYLZLKrar/wSfguNABLXxhx2uc2Ng43/phyZlHnvM8JV46BFmaph6CDiEW96oGbIZ9a7dMzfjitc5T4gVUdW9jzd0RnMpnsmy+1rRdg5Y346/L/cDFdRailWmNuY+lpsoC8QlAV4LvLRToLPaU3SUoBTkjsAw07ghADP+WYeTzDgRghlhDz4AiYLyKL/UsvYm91ZaAQ/ZsCh6Ez/faMZQPiuybmVNHQIX3OwcOX+X5JPefCIO0Uy2hYs+GZcsMfZt5470a1CXZa6UlPR103aV1QWb9N9F spo@spo-chrome.localdomain
+        #main key
+        ssh-rsa AAAA... me@hostname
         #Another keys below
-        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC33lZtGxrGT+k8Ngke85ei41imIFlmFiGTrlNoBvr3Nl15FspnkAGtGCQGA3cQ1rkuihUBXBheNST6DkPPmEt1oLicg1eL99ShXB0tVUm4RsGAdlQ6xDWoI9LdSjpj3RRnrGYx0zNCvTIzgbuzgg7DcA+wsObrziRkt2AJ9OrfSd7iIKxz+N0Ptt5/F9Iq0zdkiYLjA3q6RSa8RMEen9DRQ9bPy8+jJ9Hyyn7Zex/v6ol39VJZ7ZcKHsoI0qMrbTUtodgussswmNtnO8GHlBiYxi+saN93LeDE4kY9mWbyKRpag6QUjZzUMQwzSb1gq4hOa2g2EFMAXqka8wTggGT5/JWJHaf9x/gRhqBMpms+3vicCnHLwcmbYaMIvwqVKLd4OnH030GNf27Xf7mzkKdgnotpzty0J7BfXsqXTaqEI8uBCte3zBNlrFyyaSCp04sYXgglaLQyOpTrGmd88/Lfcqo663vuL6R0dxKimHeiesXtPJBrTwfkMIIrc4slqjXo+9UbKC13WUJ4ZE6LGLDy2T4ZykOSJ537CSf1z65rC3X6NB8zjBz812lfMGqB5qj6/mGgc/Xy0ncbbIEEPdcTUtPO9MDv4qsQUFl0gfIYU1NobxfJ3dZ8lN/CmFv+QLXVlYhvyCbO9ZwhS/Nj6FRtT3kCtKi+RvEdWbPdC2oLxQ== spo@server13.localdomain
+        ssh-rsa AAAA... me@hostname
