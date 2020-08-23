@@ -11,7 +11,9 @@ RUN apk add --update --no-cache ${SSHD_PACKAGE}\
 \
  && echo "Port ${SSHD_PORT}" > /etc/ssh/sshd_config.d/port.conf\
  && echo 'Include /etc/ssh/sshd_config.d/*.conf' >> /etc/ssh/sshd_config\
- && echo root:root | chpasswd
+\
+ # Unlock root user. Set the password hash to the invalid '*' value.
+ && sed -i -e 's/^root:!:/root:*:/' /etc/shadow
 
 EXPOSE ${SSHD_PORT}
 ENTRYPOINT ["/entrypoint.sh"]
