@@ -1,7 +1,0 @@
-#!/bin/sh
-
-echo "------ HOOK START - ${0} -------"
-
-. ../.env
-
-echo "------ HOOK END - ${0} -------"

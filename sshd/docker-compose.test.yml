@@ -10,7 +10,7 @@ services:
         ADD_PACKAGES: make openssh-client
     environment:
       TARGET_HOST: sshd
-      TARGET_PORT: "${SSHD_PORT}"
+      TARGET_PORT: 64022
 #  ssh-keygen -C 'test-id' -f ./test-rsa -N "" -v
 #  cat ./test-rsa | base64 | sed -e ':a;N;$!ba;s/\n//g'
       PRIVATE_KEY_BASE64: "${TEST_PRIVATE_KEY_BASE64}"
@@ -20,4 +20,4 @@ services:
     image: ${IMAGE_NAME}
     environment:
       AUTHORIZED_KEYS: "${TEST_PUBLIC_KEY}"
-      SSHD_PORT: "${SSHD_PORT}"
+      SSHD_PORT: 64022
