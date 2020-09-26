@@ -1,4 +1,5 @@
 #!/bin/sh
 
-ls -la
-echo ${IMAGE_NAME}
+echo ---
+echo ${tetete}
+echo ---
