@@ -1,0 +1,16 @@
+.PHONY: tests prepare test1 test2
+
+tests: prepare test1 test2
+
+prepare:
+	mkdir -vp ${HOME}/.ssh
+	echo "${PRIVATE_KEY_BASE64}" | base64 -d >> ${HOME}/.ssh/id_rsa
+	chmod -v go-rwx ${HOME} ${HOME}/.ssh ${HOME}/.ssh/id_rsa
+	cat ${HOME}/.ssh/id_rsa
+	sleep 10s
+
+test1:
+	ssh root@${TARGET_HOST} -p ${TARGET_PORT} -o StrictHostKeyChecking=no true
+
+test2:
+	ssh root@${TARGET_HOST} -p ${TARGET_PORT} -o StrictHostKeyChecking=no ls -la /
