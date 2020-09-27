@@ -4,7 +4,7 @@ tests: prepare test1 test2
 
 prepare:
 	mkdir -vp ${HOME}/.ssh
-	echo "${PRIVATE_KEY_BASE64}" | base64 -d >> ${HOME}/.ssh/id_rsa
+	@echo "${PRIVATE_KEY_BASE64}" | base64 -d >> ${HOME}/.ssh/id_rsa
 	chmod -v go-rwx ${HOME} ${HOME}/.ssh ${HOME}/.ssh/id_rsa
 	sleep 5s
 
