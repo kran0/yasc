@@ -1,6 +1,8 @@
 .PHONY: tests prepare test1 test2
 
-tests: prepare test1 test2
+test1 test2: prepare
+
+tests: test1 test2
 
 prepare:
 	mkdir -vp ${HOME}/.ssh
@@ -9,7 +11,7 @@ prepare:
 	sleep 5s
 
 test1:
-	ssh root@${TARGET_HOST} -p ${TARGET_PORT} -o StrictHostKeyChecking=no true
+	ssh -v root@${TARGET_HOST} -p ${TARGET_PORT} -o StrictHostKeyChecking=no true
 
 test2:
-	ssh root@${TARGET_HOST} -p ${TARGET_PORT} -o StrictHostKeyChecking=no ls -la /
+	ssh root@${TARGET_HOST} -p ${TARGET_PORT} -o StrictHostKeyChecking=no sshd -t
