@@ -3,6 +3,7 @@ FROM fedora:rawhide as rpmextractor
 # Place RPM's to the current dir, if needed
 COPY . .
 
+# Or select ADDITIONAL_PACKAGES from repos
 ARG ADDITIONAL_PACKAGES
 
 RUN dnf --verbose --assumeyes install\

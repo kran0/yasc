@@ -1,0 +1,20 @@
+# USAGE: podman-compose -f ./compose.yaml -f ./compose-vipnet.yaml
+
+services:
+  sshd:
+    image: docker.io/kran0/dropbear-vipnet:tiny
+    build:
+      args:
+        - ADDITIONAL_PACKAGES=vipnetclient_ru_x86-64_*.rpm iputils iptables # vipnet-client additionals packages
+    environment:
+      VIPNET_KEY_CONTAINER_PASSWORD: "000"
+      VIPNET_KEY_CONTAINER_FILE: /vipnet_key_containr.dst
+      AUTHORIZED_KEYS: |
+        #main key
+        ssh-rsa example-key login@hostname.localdomain
+    volumes:
+      - ./secrets/vipnet_key_containr.dst:/vipnet_key_containr.dst
+      - ./container/entrypoints/vipnet.sh:/entrypoint:ro
+    entrypoint: [ "/entrypoint" ]
+    command: [ ]
+    privileged: true # TODO: select suitable cap. NET_CAP needed for iptables ?
