@@ -1,8 +1,7 @@
-# USAGE: podman-compose -f ./compose.yaml -f ./compose-vipnet.yaml
 
 services:
   sshd:
-    image: docker.io/kran0/dropbear-vipnet:tiny
+    image: docker.io/kran0/dropbear:vipnet
     build:
       args:
         - ADDITIONAL_PACKAGES=vipnetclient_ru_x86-64_*.rpm iputils iptables # vipnet-client additionals packages

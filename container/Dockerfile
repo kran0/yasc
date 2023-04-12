@@ -1,25 +1,21 @@
-FROM fedora:rawhide as rpmextractor
+
+ARG FEDORA_RELEASE=rawhide
+FROM fedora:${FEDORA_RELEASE:-rawhide} as rpmextractor
 
 # Place RPM's to the current dir, if needed
-COPY . .
+COPY *.rpm /tmp
 
 # Or select ADDITIONAL_PACKAGES from repos
 ARG ADDITIONAL_PACKAGES
+arg FEDORA_RELEASE=rawhide
 
-RUN dnf --verbose --assumeyes install\
- --installroot /target --releasever rawhide\
+RUN cd /tmp\
+ && dnf --verbose --assumeyes install\
+ $([ "${FEDORA_RELEASE}" '==' "latest" ] || echo --releasever ${FEDORA_RELEASE:-rawhide})\
  --setopt install_weak_deps=false\
- dropbear ${ADDITIONAL_PACKAGES}
-
-# remove unused depencies
-RUN rm -rvf\
- /target/{afs,boot,dev,home,lib,sbin,media,mnt,opt,proc,run,srv,sys,tmp}\
- /target/usr/{games,libexec,local,share,src,tmp}\
- /target/usr/lib64/{X11,audit,bpf,games,gconv,pm-utils}
-
-FROM scratch
-
-COPY --from=rpmextractor /target /
+ --setopt=tsflags=nocontexts\
+ dropbear ${ADDITIONAL_PACKAGES}\
+ && dnf --verbose clean all && rm -vrf /var/cache/yum
 
 EXPOSE 64022
 ENTRYPOINT [ "/usr/sbin/dropbear" ]
