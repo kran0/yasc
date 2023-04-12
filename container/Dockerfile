@@ -1,13 +1,13 @@
-
 ARG FEDORA_RELEASE=rawhide
 FROM fedora:${FEDORA_RELEASE:-rawhide} as rpmextractor
 
-# Place RPM's to the current dir, if needed
+# Place RPM's to /tmp
 COPY *.rpm /tmp
 
-# Or select ADDITIONAL_PACKAGES from repos
+# Select ADDITIONAL_PACKAGES
 ARG ADDITIONAL_PACKAGES
-arg FEDORA_RELEASE=rawhide
+
+ARG FEDORA_RELEASE=rawhide
 
 RUN cd /tmp\
  && dnf --verbose --assumeyes install\
