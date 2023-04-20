@@ -5,8 +5,8 @@ services:
 
     build:
       context: container
-      args:
-        - FEDORA_RELEASE=latest
+#      args:
+#        - FEDORA_RELEASE=latest
 
     ports:
       - 64022:64022
