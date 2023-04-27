@@ -5,7 +5,7 @@ ARG ADDITIONAL_PACKAGES
 ARG FEDORA_RELEASE=rawhide
 
 WORKDIR /workdir
-COPY *.rpm .
+COPY . .
 
 RUN microdnf --assumeyes --no-plugins\
  --setopt install_weak_deps=false --setopt=tsflags=nocontexts --no-docs\
