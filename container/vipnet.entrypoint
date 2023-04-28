@@ -1,0 +1,6 @@
+[ -z "${VIPNET_KEY_CONTAINER_FILE}" ] || (
+ /usr/bin/vipnetclient --no-start --psw ${VIPNET_KEY_CONTAINER_PASSWORD} installkeys ${VIPNET_KEY_CONTAINER_FILE}
+)
+unset VIPNET_KEY_CONTAINER_PASSWORD\
+      VIPNET_KEY_CONTAINER_FILE # trust no one!
+/usr/bin/vipnetclient start

@@ -18,8 +18,8 @@ RUN microdnf --assumeyes --no-plugins\
 
 RUN rm -vrf /target/{afs,boot,dev,media,mnt,opt,proc,run,srv,sys}\
  /target/var/log/*.log\
- /var/cache/*\
- /var/tmp/*
+ /target/var/cache/*\
+ /target/var/tmp/*
 
 RUN ./entrypoints-generator.sh > /target/entrypoint\
  && chmod +x /target/entrypoint

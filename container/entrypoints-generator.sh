@@ -18,20 +18,20 @@ do
 
 echo "ENTRYPOINT: starting ${c}"
 $(cat ${c}*.entrypoint)
-echo -e "ENTRYPOINT: ${c} started"
+echo "ENTRYPOINT: ${c} started"
 
 ENTRYPOINT_CALL
 done
 
-cat << 'DROPBEAR'
+cat << 'AUTHORIZED_KEYS'
 if ! [ -z "${AUTHORIZED_KEYS}" ]
 then
  echo -e '\nENTRYPOINT: preparing authorized_keys'
  mkdir -vp "${HOME}/.ssh"
  echo "${AUTHORIZED_KEYS}" > "${HOME}/.ssh/authorized_keys"
  chmod -v go-w "${HOME}" "${HOME}/.ssh" "${HOME}/.ssh/authorized_keys"
- unset AUTHORIZED_KEYS
+ unset AUTHORIZED_KEYS # no trust
 fi
 
 echo -e '\nENTRYPOINT: End'
-DROPBEAR
+AUTHORIZED_KEYS
