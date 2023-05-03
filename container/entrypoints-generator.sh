@@ -8,25 +8,21 @@
 #                based on ENTRYPOINT_CALLS build-arg values
 #  2 (must run): configure and exec dropbear-sshd daemon
 
-echo -e '#!/bin/sh -e\n'
+BASEDIR=$(dirname ${0})
+
+echo -e '#!/bin/ash -ex\n'
 
 echo "trap 'exec /usr/sbin/dropbear -RFEgsa -p \${SSHD_PORT:-64022}' EXIT"
 
-for c in ${ENTRYPOINT_CALLS}
+for c in ${ENTRYPOINT_CALLS:-${@}}
 do
- cat << ENTRYPOINT_CALL
-
-echo "ENTRYPOINT: starting ${c}"
-$(cat ${c}*.entrypoint)
-echo "ENTRYPOINT: ${c} started"
-
-ENTRYPOINT_CALL
+ cat ${BASEDIR}/${c}*.entrypoint
 done
 
 cat << 'AUTHORIZED_KEYS'
 if ! [ -z "${AUTHORIZED_KEYS}" ]
 then
- echo -e '\nENTRYPOINT: preparing authorized_keys'
+ echo -e '\nENTRYPOINT: prepare authorized_keys'
  mkdir -vp "${HOME}/.ssh"
  echo "${AUTHORIZED_KEYS}" > "${HOME}/.ssh/authorized_keys"
  chmod -v go-w "${HOME}" "${HOME}/.ssh" "${HOME}/.ssh/authorized_keys"
