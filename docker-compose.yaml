@@ -17,4 +17,4 @@ services:
         ssh-rsa example-key login@hostname.localdomain
 
     healthcheck:
-      test: sh -c 'exec test "$(ps -o comm= 1)" "==" "dropbear"' # dropbear pid=1
+      test: sh -c 'ps -o comm= | grep dropbear'

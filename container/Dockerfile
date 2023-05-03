@@ -1,31 +1,27 @@
-ARG FEDORA_RELEASE=rawhide
-FROM registry.fedoraproject.org/fedora-minimal:${FEDORA_RELEASE:-rawhide} as rpmextractor
+FROM docker.io/library/alpine:edge as prepare
 
 ARG ADDITIONAL_PACKAGES
-ARG FEDORA_RELEASE=rawhide
-
 ARG ENTRYPOINT_CALLS
-ENV ENTRYPOINT_CALLS=${ENTRYPOINT_CALLS}
 
-WORKDIR /workdir
+WORKDIR /tmp/prepare
 COPY . .
+ADD https://raw.githubusercontent.com/kran0/tinyimages/master/apkextractor.sh .
 
-RUN microdnf --assumeyes --no-plugins\
- --setopt install_weak_deps=false --setopt=tsflags=nocontexts --no-docs\
- --installroot=/target --use-host-config\
- $([ "${FEDORA_RELEASE}" '==' "latest" ] || echo --releasever ${FEDORA_RELEASE:-rawhide})\
- install dropbear ${ADDITIONAL_PACKAGES}
+# Copy dropbear and additional packages tree to the /target
+RUN /bin/sh ./apkextractor.sh dropbear ${ADDITIONAL_PACKAGES}\
+ && mkdir -vp /target/etc/dropbear
 
-RUN rm -vrf /target/{afs,boot,dev,media,mnt,opt,proc,run,srv,sys}\
- /target/var/log/*.log\
- /target/var/cache/*\
- /target/var/tmp/*
+# TODO: It must be buggy. Better use tar.gz static versions
+# Try to unpack strange rpm's (like vipnetclient) to the /target
+RUN apk add --update rpm2cpio\
+ && for rpm in *.rpm; do rpm2cpio ${rpm} | (cd /target && cpio -idmv); done
 
-RUN ./entrypoints-generator.sh > /target/entrypoint\
+# Create /target/entrypoint
+RUN ./entrypoints-generator.sh ${ENTRYPOINT_CALLS} > /target/entrypoint\
  && chmod +x /target/entrypoint
 
-FROM scratch
-COPY --from=rpmextractor /target /
+FROM docker.io/library/busybox:musl
+COPY --from=prepare /target /
 
 EXPOSE 64022
 ENTRYPOINT [ "/entrypoint" ]

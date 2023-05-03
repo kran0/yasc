@@ -5,7 +5,7 @@ services:
 
     build:
       args:
-        - ADDITIONAL_PACKAGES=vipnetclient_ru_x86-64_*.rpm iputils iptables # vipnet-client additionals packages
+        - ADDITIONAL_PACKAGES=iptables gcompat # additionals packages
         - ENTRYPOINT_CALLS=vipnet
 
     environment:
