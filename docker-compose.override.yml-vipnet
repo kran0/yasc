@@ -5,7 +5,7 @@ services:
 
     build:
       args:
-        - ADDITIONAL_PACKAGES=iptables gcompat # additionals packages
+        - ADDITIONAL_PACKAGES=iptables # additional packages
         - ENTRYPOINT_CALLS=vipnet
 
     environment:

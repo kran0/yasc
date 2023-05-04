@@ -20,7 +20,7 @@ RUN apk add --update rpm2cpio\
 RUN ./entrypoints-generator.sh ${ENTRYPOINT_CALLS} > /target/entrypoint\
  && chmod +x /target/entrypoint
 
-FROM docker.io/library/busybox:musl
+FROM docker.io/library/busybox:latest
 COPY --from=prepare /target /
 
 EXPOSE 64022
