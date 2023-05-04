@@ -2,19 +2,14 @@
 services:
   sshd:
     image: docker.io/kran0/dropbear:latest
-
     build:
       context: container
-#      args:
-#        - FEDORA_RELEASE=latest
-
     ports:
       - 64022:64022
-
     environment:
       AUTHORIZED_KEYS: |
         #main key
         ssh-rsa example-key login@hostname.localdomain
 
     healthcheck:
-      test: sh -c 'ps -o comm= | grep dropbear'
+      test: sh -c "ps -o pid=,comm= | grep -q '^ *1 dropbear$'" # pid=1 comm=dropbear
