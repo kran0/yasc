@@ -10,7 +10,7 @@
 
 BASEDIR=$(dirname ${0})
 
-echo -e '#!/bin/ash -ex\n'
+echo -e '#!/bin/ash -e\n'
 
 echo "trap 'exec /usr/sbin/dropbear -RFEgsa -p \${SSHD_PORT:-64022}' EXIT"
 
