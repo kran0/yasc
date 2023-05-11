@@ -1,20 +1,19 @@
-FROM docker.io/library/alpine:edge as prepare
+FROM docker.io/kran0/tiny:dropbear-pure AS dropbear
+FROM docker.io/library/alpine:edge AS prepare
 
-ARG ADDITIONAL_PACKAGES
 ARG ENTRYPOINT_CALLS
-
 WORKDIR /tmp/prepare
-COPY . .
-ADD https://raw.githubusercontent.com/kran0/tinyimages/master/apkextractor.sh .
+COPY . /tmp/prepare
 
 # Copy dropbear and additional packages tree to the /target
-RUN /bin/sh ./apkextractor.sh dropbear ${ADDITIONAL_PACKAGES}\
- && mkdir -vp /target/etc/dropbear
+COPY --from=dropbear / /target
+RUN mkdir -vp /target/etc/dropbear
 
 # TODO: It must be buggy. Better use tar.gz static versions
 # Try to unpack strange rpm's (like vipnetclient) to the /target
 RUN apk add --update rpm2cpio\
- && for rpm in *.rpm; do rpm2cpio ${rpm} | (cd /target && cpio -idmv); done
+ && for rpm in *.rpm; do rpm2cpio ${rpm} | (cd /target && cpio -idmv); done\
+ && rm -rvf /target/usr/share/man
 
 # Create /target/entrypoint
 RUN ./entrypoints-generator.sh ${ENTRYPOINT_CALLS} > /target/entrypoint\
