@@ -18,4 +18,4 @@ services:
     volumes:
       - ./secrets/vipnet_key_containr.dst:/vipnet_key_containr.dst
 
-    privileged: true # TODO: select suitable cap. NET_CAP needed for iptables ?
+    privileged: true # TODO: select suitable cap. Dropbear ?
