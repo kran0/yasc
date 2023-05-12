@@ -18,4 +18,4 @@ services:
     volumes:
       - ./secrets/vipnet_key_containr.dst:/vipnet_key_containr.dst
 
-    privileged: true # TODO: select suitable cap. Dropbear ?
+    privileged: true # TODO: select suitable cap for Wipnet-Client
