@@ -10,7 +10,7 @@ COPY --from=docker.io/kran0/tiny:dropbear / /target
 # Try to unpack strange rpm's (like vipnetclient) to the /target
 RUN apk add --update --virtual .temp rpm2cpio\
  && for rpm in /prepare/*.rpm; do rpm2cpio ${rpm} | (cd /target && cpio -idmv); done\
- && rm -rvf /target/usr/share/man\
+ && rm -rvf /target/usr/share/man /target/etc/bash_completion.d\
  && apk del .temp
 
 RUN mkdir -vp /target/etc/dropbear\

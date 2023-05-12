@@ -5,7 +5,6 @@ services:
 
     build:
       args:
-        - ADDITIONAL_PACKAGES=iptables # additional packages
         - ENTRYPOINT_CALLS=vipnet
 
     environment:
