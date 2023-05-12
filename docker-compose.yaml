@@ -12,4 +12,4 @@ services:
         ssh-rsa example-key login@hostname.localdomain
 
     healthcheck:
-      test: grep -qxF dropbear /proc/1/comm
+      test: /bin/busybox grep -qxF dropbear /proc/1/comm

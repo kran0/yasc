@@ -1,25 +1,25 @@
-FROM docker.io/kran0/tiny:dropbear-pure AS dropbear
 FROM docker.io/library/alpine:edge AS prepare
 
 ARG ENTRYPOINT_CALLS
 WORKDIR /tmp/prepare
 COPY . /tmp/prepare
 
-# Copy dropbear and additional packages tree to the /target
-COPY --from=dropbear / /target
-RUN mkdir -vp /target/etc/dropbear
+# Copy dropbear to the /target
+COPY --from=docker.io/kran0/tiny:dropbear / /target
 
 # TODO: It must be buggy. Better use tar.gz static versions
 # Try to unpack strange rpm's (like vipnetclient) to the /target
-RUN apk add --update rpm2cpio\
+RUN apk add --update --virtual .temp rpm2cpio\
  && for rpm in *.rpm; do rpm2cpio ${rpm} | (cd /target && cpio -idmv); done\
- && rm -rvf /target/usr/share/man
+ && rm -rvf /target/usr/share/man\
+ && apk del .temp
 
-# Create /target/entrypoint
-RUN ./entrypoints-generator.sh ${ENTRYPOINT_CALLS} > /target/entrypoint\
- && chmod +x /target/entrypoint
+RUN mkdir -vp /target/etc/dropbear\
+ && ./entrypoints-generator.sh ${ENTRYPOINT_CALLS} > /target/entrypoint\
+ && chmod +x /target/entrypoint\
+ && echo 'root:x:0:0:root:/root:/bin/sh' > /target/etc/passwd
 
-FROM docker.io/library/busybox:latest
+FROM scratch
 COPY --from=prepare /target /
 
 EXPOSE 64022

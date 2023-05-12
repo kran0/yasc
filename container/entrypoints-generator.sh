@@ -10,7 +10,7 @@
 
 BASEDIR=$(dirname ${0})
 
-echo -e '#!/bin/ash -e\n'
+echo -e '#!/bin/sh -e\n'
 
 echo "trap 'exec /usr/sbin/dropbear -RFEgsa -p \${SSHD_PORT:-64022}' EXIT"
 
@@ -23,9 +23,9 @@ cat << 'AUTHORIZED_KEYS'
 if ! [ -z "${AUTHORIZED_KEYS}" ]
 then
  echo -e '\nENTRYPOINT: prepare authorized_keys'
- mkdir -vp "${HOME}/.ssh"
+ /bin/busybox mkdir -vp "${HOME}/.ssh"
  echo "${AUTHORIZED_KEYS}" > "${HOME}/.ssh/authorized_keys"
- chmod -v go-w "${HOME}" "${HOME}/.ssh" "${HOME}/.ssh/authorized_keys"
+ /bin/busybox chmod -v go-w "${HOME}" "${HOME}/.ssh" "${HOME}/.ssh/authorized_keys"
  unset AUTHORIZED_KEYS # no trust
 fi
 
